@@ -1,2 +1,11 @@
+/*
+Liste todos os clientes, mesmo os que não fizeram nenhum pedido, 
+com os dados do pedido (se houver).
+*/
 
-
+select 
+	c.nome nome_Cliente,
+    p.*
+from clientes c
+	left join pedidos p
+		on c.id = p.cliente
