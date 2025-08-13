@@ -91,6 +91,7 @@ select
     
 /*Qual o produto mais vendido no dia 06/04/2023?*/
 
+
 select 
 	p.data,
 	i.produto,
@@ -112,6 +113,62 @@ select
 
 
 
+/* Qual o valor médio dos pedidos feitos pelo Cliente João Silva?*/
 
+select 
+	p.id,	
+    sum(i.quantidade * i.valor_unitario) /  count(*) valor_medio
+	from pedidos p
+		join item_pedido i
+			on i.pedido = p.id
+		join clientes c
+			on c.id = p.cliente
+	  where
+		c.nome = 'João Silva'
+	group by 
+		p.id
+    
+
+/* Quais clientes nunca compraram?*/    
+
+select 
+	c.nome
+from clientes c
+	left join pedidos p
+		on p.cliente = c.id
+        
+where
+	p.cliente is null
+    
+    
+select 
+	c.nome
+	from clientes c
+    where
+		c.id not in (			
+            select p.cliente
+            from pedidos p
+        )
+
+
+/*Quais produtos nunca foram vendidos?*/
+
+select 
+	p.nome
+	from produtos p
+		left join item_pedido i
+			on p.id = i.produto
+	where
+		i.produto is null
+
+select 
+	p.nome
+	from produtos p    
+    where
+		p.id not in (
+			select i.produto
+				from item_pedido i
+        )
+    
 
 
