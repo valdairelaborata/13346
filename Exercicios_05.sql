@@ -2,6 +2,7 @@
 no bairro Xaxim.
 */
 
+explain
 select 
 	c.nome,
     c.cpf,
@@ -19,6 +20,8 @@ where
       
       
 /*Quantidade de Clientes que residem no Paraná.*/
+
+explain
 select 
 		count(*) qtd_clientes_pr
 	from clientes c	
@@ -35,21 +38,24 @@ select
       
 /*Lista de produtos ordenado pelo Nome de A - Z.*/
 
+explain
 select 
 	p.id,
-    p.nome,
-    p.preco,    
-    p.quantidade
+    p.nome
+  /*  p.preco,    
+    p.quantidade*/
 	from produtos p
-order by p.nome asc
+order by 
+	p.nome asc
     
 
 /*Listagem de Pedidos do Cliente João da Silva.*/
 
+explain
 select 
 	p.id,
-    p.data,
-    p.valor_total
+    p.data
+    /*p.valor_total*/
 	from pedidos p
 		join clientes c
 			on c.id = p.cliente
@@ -58,6 +64,7 @@ select
 
 /*Qual o pedido com mais itens e quais os itens vendidos nele?*/
 
+explain
 select 
 	p.id id_pedido,
     count(*) itens
@@ -68,6 +75,7 @@ select
     order by itens desc
     limit 1
     
+    explain
     select 
 		p.nome        
 		from item_pedido ip
@@ -78,6 +86,7 @@ select
 		
 /*Qual o valor total vendido no dia 06/04/2023?*/
 
+explain
 select 
 	p.data,    
 	sum(i.quantidade * i.valor_unitario) valor_total
@@ -91,7 +100,7 @@ select
     
 /*Qual o produto mais vendido no dia 06/04/2023?*/
 
-
+explain
 select 
 	p.data,
 	i.produto,
@@ -115,6 +124,7 @@ select
 
 /* Qual o valor médio dos pedidos feitos pelo Cliente João Silva?*/
 
+explain
 select 
 	p.id,	
     sum(i.quantidade * i.valor_unitario) /  count(*) valor_medio
@@ -131,6 +141,7 @@ select
 
 /* Quais clientes nunca compraram?*/    
 
+explain
 select 
 	c.nome
 from clientes c
@@ -140,7 +151,8 @@ from clientes c
 where
 	p.cliente is null
     
-    
+
+explain    
 select 
 	c.nome
 	from clientes c
@@ -153,6 +165,7 @@ select
 
 /*Quais produtos nunca foram vendidos?*/
 
+explain
 select 
 	p.nome
 	from produtos p
@@ -161,6 +174,7 @@ select
 	where
 		i.produto is null
 
+explain
 select 
 	p.nome
 	from produtos p    
